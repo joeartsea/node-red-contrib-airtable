@@ -1,0 +1,32 @@
+{
+  "name": "node-red-contrib-airtable",
+  "version": "0.0.1",
+  "description": "A collection of Node-RED nodes for Airtable.",
+  "dependencies": {
+    "airtable": "^0.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joeartsea/node-red-contrib-airtable"
+  },
+  "license": "Apache",
+  "keywords": [
+    "node-red",
+    "airtable"
+  ],
+  "node-red": {
+    "nodes": {
+      "airtable": "airtable.js"
+    }
+  },
+  "author": {
+    "name": "Atsushi Kojo",
+    "email": "artsnet111@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "joeartsea",
+      "email": "artsnet111@gmail.com"
+    }
+  ]
+}

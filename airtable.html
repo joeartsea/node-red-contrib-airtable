@@ -1,0 +1,94 @@
+<!--
+  Copyright 2018 Atsushi Kojo.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/x-red" data-template-name="airtable">
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="fa fa-bookmark"></i> Name</label>
+    <input type="text" id="node-config-input-name" placeholder="Name" />
+  </div>
+  <div class="form-row input-apiKey-row">
+    <label for="node-config-input-apiKey"><i class="fa fa-lock"></i> API Key</label>
+    <input type="password" id="node-config-input-apiKey">
+  </div>
+  <div class="form-row input-baseId-row">
+    <label for="node-config-input-baseId"><i class="fa fa-bookmark"></i> Base Id</label>
+    <input type="text" id="node-config-input-baseId" />
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('airtable', {
+    category: 'config',
+    color: "#48ace4",
+    defaults: {
+      name: { value: '', required: true }
+    },
+    credentials: {
+      apiKey: { type: 'password', required: true },
+      baseId: { type: 'text', required: true }
+    },
+    label: function() {
+      return this.name
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="airtable out">
+  <div class="form-row">
+    <label for="node-input-airtable"><i class="fa fa-user"></i> Set API Key</label>
+    <input type="text" id="node-input-airtable">
+  </div>
+  <div class="form-row">
+    <label for="node-input-table"><i class="fa fa-database"></i> Table</label>
+    <input type="text" id="node-input-table">
+  </div>
+  <div class="form-row">
+    <label for="node-input-operation"><i class="fa fa-wrench"></i> Operation</label>
+    <select type="text" id="node-input-operation">
+      <option value="create">create</option>
+      <option value="update">update</option>
+      <option value="replace">replace</option>
+      <option value="delete">delete</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('airtable out', {
+    category: 'storage-output',
+    color: "#fff",
+    defaults: {
+      airtable: { type: 'airtable', required: true },
+      operation: { value: 'create' },
+      table: { value: '' },
+      name: { value: '' }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'airtable.png',
+    label: function () {
+      var airtableNode = RED.nodes.node(this.airtable);
+      return this.name || 'airtable';
+    },
+    labelStyle: function () {
+      return this.name ? 'node_label_italic' : '';
+    }
+  });
+</script>
