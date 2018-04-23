@@ -67,6 +67,10 @@ module.exports = function (RED) {
         }
         var base = new Airtable({apiKey: credentials.apiKey}).base(credentials.baseId);
         switch (node.operation) {
+          case 'find':
+            msg.payload = node.convType(msg.recId, 'string');
+            base(node.table).find(msg.recId, node.sendMsg);
+            break;
           case 'create':
             msg.payload = node.convType(msg.payload, 'object');
             base(node.table).create(msg.payload, node.sendMsg);
