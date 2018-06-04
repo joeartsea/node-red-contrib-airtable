@@ -68,8 +68,17 @@ module.exports = function (RED) {
         var base = new Airtable({apiKey: credentials.apiKey}).base(credentials.baseId);
         switch (node.operation) {
           case 'select':
+            let records = [];
             msg.payload = node.convType(msg.payload, 'object');
-            base(node.table).select(msg.payload, node.sendMsg);
+            base(node.table).select(msg.payload)
+              .eachPage(function page(records, fetchNextPage) {
+                records.forEach(function(record) {
+                    node.sendMsg(null, record);
+                });
+                fetchNextPage();
+              }, function done(err) {
+                  if (err) { console.error(err); return; }
+              });;
             break;
           case 'find':
             msg.payload = node.convType(msg.recId, 'string');
