@@ -102,6 +102,8 @@ module.exports = function (RED) {
             msg.payload = node.convType(msg.payload, 'object');
             base(table).destroy(msg.recId, node.sendMsg);
             break;
+          default:
+            console.error('unknown operation')
         }
       });
     } else {
