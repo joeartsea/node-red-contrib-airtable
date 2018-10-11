@@ -66,11 +66,13 @@ module.exports = function (RED) {
           return;
         }
         var base = new Airtable({apiKey: credentials.apiKey}).base(credentials.baseId);
-        switch (node.operation) {
+        var table = msg.table || node.table;
+        var operation = msg.operation || node.operation;
+        switch (operation) {
           case 'select':
             let records = [];
             msg.payload = node.convType(msg.payload, 'object');
-            base(node.table).select(msg.payload)
+            base(table).select(msg.payload)
               .eachPage(function page(records, fetchNextPage) {
                 records.forEach(function(record) {
                     node.sendMsg(null, record);
@@ -82,24 +84,26 @@ module.exports = function (RED) {
             break;
           case 'find':
             msg.payload = node.convType(msg.recId, 'string');
-            base(node.table).find(msg.recId, node.sendMsg);
+            base(table).find(msg.recId, node.sendMsg);
             break;
           case 'create':
             msg.payload = node.convType(msg.payload, 'object');
-            base(node.table).create(msg.payload, node.sendMsg);
+            base(table).create(msg.payload, node.sendMsg);
             break;
           case 'update':
             msg.payload = node.convType(msg.payload, 'object');
-            base(node.table).update(msg.recId, msg.payload, node.sendMsg);
+            base(table).update(msg.recId, msg.payload, node.sendMsg);
             break;
           case 'replace':
             msg.payload = node.convType(msg.payload, 'object');
-            base(node.table).replace(msg.recId, msg.payload, node.sendMsg);
+            base(table).replace(msg.recId, msg.payload, node.sendMsg);
             break;
           case 'delete':
             msg.payload = node.convType(msg.payload, 'object');
-            base(node.table).destroy(msg.recId, node.sendMsg);
+            base(table).destroy(msg.recId, node.sendMsg);
             break;
+          default:
+            console.error('unknown operation')
         }
       });
     } else {
