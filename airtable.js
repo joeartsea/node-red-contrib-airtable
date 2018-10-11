@@ -79,7 +79,11 @@ module.exports = function (RED) {
                 });
                 fetchNextPage();
               }, function done(err) {
-                  if (err) { console.error(err); return; }
+                  if (err) { 
+                    node.error(err.toString(), msg);
+                    console.error(err); 
+                    return; 
+                  }
               });;
             break;
           case 'find':
@@ -103,7 +107,8 @@ module.exports = function (RED) {
             base(table).destroy(msg.recId, node.sendMsg);
             break;
           default:
-            console.error('unknown operation')
+            node.error('unknown operation', msg);
+            console.error('unknown operation');
         }
       });
     } else {
