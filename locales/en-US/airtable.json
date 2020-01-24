@@ -1,0 +1,22 @@
+{
+    "airtable" : {
+        "label" : {
+            "name" : "Name",
+            "apiKey" : "API Key",
+            "baseId" : "Base Id"
+        },
+        "placeholder" : {
+            "name" : "Name"
+        }
+    },
+    "airtable_out" : {
+        "label" : {
+            "table" : "Table",
+            "operation" : "Operation",
+            "name" : "Name"
+        },
+        "placeholder" : {
+            "name" : "Name"
+        }
+    }
+}
