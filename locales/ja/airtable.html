@@ -1,0 +1,87 @@
+<script type="text/x-red" data-help-name="airtable">
+  <p>Airtableの認証情報を設定します。</p>
+  <p></p>
+  <p><code>名前</code>は、任意の名前を設定します。</p>
+  <p><code>API Key</code>は、APIキーを設定します。</p>
+  <p><code>Base Id</code>は、操作するベースのIDを設定します。ベースIDは、HELP > API documentationにアクセスしてベースを選択すると、<b>INTRODUCTION</b>に表示されます。</p>
+</script>
+
+<script type="text/x-red" data-help-name="airtable out">
+  <p>Airtable APIを使用して、<code>Operation</code>で選択した以下の処理を実行します。</p>
+  <ul>
+    <li>select</li>
+    <li>find</li>
+    <li>create</li>
+    <li>update</li>
+    <li>replace</li>
+    <li>delete</li>
+  </ul>
+
+  <h3>入力</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">オブジェクト | 配列</span></dt>
+        <dd>選択した処理を実行するデータを入力します。</dd>
+        <dt>recId <span class="property-type">文字列</span></dt>
+        <dd>選択した処理を実行するレコードIDを入力します。</dd>
+    </dl>
+
+  <h3>出力</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">オブジェクト</span></dt>
+        <dd>選択した処理の実行結果を出力します。</dd>
+    </dl>
+
+  <h3>詳細</h3>
+    <p><code>テーブル名</code>にテーブル名を設定します。</p>
+
+  <h4>select</h4>
+    <p>対象テーブルの一覧を取得します。</p>
+    <p>取得する一覧のフィルターや並び替え等の条件を<code>msg.payload</code>に入力します。</p>
+    <pre>{"fields": ["Name", "field1"], "filterByFormula": "{Name}='test1'"}</pre>
+    <p>指定可能な条件は、API documentationの<b>List records</b>を参照してください。</p>
+    <p>取得したテーブルのレコードを出力します。</p>
+
+  <h4>find</h4>
+    <p>対象テーブルの指定したレコードを取得します。</p>
+    <p><code>msg.recId</code>に取得するレコードのIDを入力します。</p>
+    <p>取得したレコードを出力します。</p>
+
+  <h4>create</h4>
+    <p>対象テーブルに新しいレコードを作成します。</p>
+    <p><code>msg.payload</code>に作成するレコードのデータを入力します。単一オブジェクトまたは、最大10件のオブジェクト配列の入力が可能です。</p>
+    <pre>{"Name": "test1", "field1": 123, "field2": false}</pre>
+    <pre>[
+  {"fields": {"Name": "test1", "field1": 123, "field2": false}}, 
+  {"fields": {"Name": "test2", "field1": 456, "field2": false}}
+]</pre>
+    <p>作成したレコードを出力します。</p>
+
+  <h4>update</h4>
+    <p>対象テーブルのレコードを更新します。<code>update</code>は、指定した項目の値のみ更新され、他の項目の値は維持されます。</p>
+    <p><code>msg.payload</code>に更新するレコードのデータを入力します。</p>
+    <pre>{"field1": 987, "field2": true}</pre>
+    <p><code>msg.recId</code>に更新するレコードのIDを入力します。</p>
+    <p>更新したレコードを出力します。</p>
+
+  <h4>replace</h4>
+    <p>対象テーブルのレコードを更新します。<code>replace</code>は、指定した項目の値を更新し、他の項目の値はクリアされます。</p>
+    <p><code>msg.payload</code>に更新するレコードのデータを入力します。</p>
+    <pre>{"Name": "test1", "field2": true}</pre>
+    <p><code>msg.recId</code>に更新するレコードのIDを入力します。</p>
+    <p>更新したレコードを出力します。</p>
+
+  <h4>delete</h4>
+    <p>対象テーブルのレコードを削除します。</p>
+    <p><code>msg.recId</code>に削除するレコードのIDを入力します。</p>
+    <p>削除したレコードを出力します。</p>
+
+  <p><b>Tip</b>: <code>select</code>の出力を使用して<code>update</code>の入力データを作成する。</p>
+  <pre>msg.recId = msg.payload.id;
+var recData = msg.payload.fields;
+recData["field1"] = 987;
+recData["field2"] = true;
+msg.payload = recData;
+</pre>
+
+</script>
+

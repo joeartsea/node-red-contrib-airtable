@@ -1,0 +1,22 @@
+{
+    "airtable" : {
+        "label" : {
+            "name" : "名前",
+            "apiKey" : "API Key",
+            "baseId" : "Base Id"
+        },
+        "placeholder" : {
+            "name" : "名前"
+        }
+    },
+    "airtable_out" : {
+        "label" : {
+            "table" : "テーブル名",
+            "operation" : "Operation",
+            "name" : "名前"
+        },
+        "placeholder" : {
+            "name" : "名前"
+        }
+    }
+}
