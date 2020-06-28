@@ -29,14 +29,6 @@
   </div>
 </script>
 
-<script type="text/x-red" data-help-name="airtable">
-  <p>Set authenticate information for Airtable.</p>
-  <p></p>
-  <p><code>Name</code> sets an arbitrary name.</p>
-  <p><code>API Key</code> sets the API key.</p>
-  <p><code>Base Id</code> sets the ID of the base to operate. The base ID can be found in <b>INTRODUCTION</b> by accessing HELP > API documentation and selecting a base.</p>
-</script>
-
 <script type="text/javascript">
   RED.nodes.registerType('airtable', {
     category: 'config',
@@ -78,85 +70,6 @@
     <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="airtable_out.label.name"></span></label>
     <input type="text" id="node-input-name" data-i18n="[placeholder]airtable_out.placeholder.name">
   </div>
-</script>
-
-<script type="text/x-red" data-help-name="airtable out">
-  <p>Use Airtable API to execute the following process selected in <code>Operation</code>.</p>
-  <ul>
-    <li>select</li>
-    <li>find</li>
-    <li>create</li>
-    <li>update</li>
-    <li>replace</li>
-    <li>delete</li>
-  </ul>
-
-  <h3>Inputs</h3>
-    <dl class="message-properties">
-        <dt>payload <span class="property-type">object | array</span></dt>
-        <dd>Inputs the data for execute the selected process.</dd>
-        <dt>recId <span class="property-type">string</span></dt>
-        <dd>Inputs the record ID for execute the selected process.</dd>
-    </dl>
-
-  <h3>Outputs</h3>
-    <dl class="message-properties">
-        <dt>payload <span class="property-type">object</span></dt>
-        <dd>Outputs the execution result of the selected process.</dd>
-    </dl>
-
-  <h3>Details</h3>
-    <p><code>Table</code> sets the table name.</p>
-
-  <h4>select</h4>
-    <p>Get a list of target tables.</p>
-    <p>Inputs the filter and sort conditions of the list to be acquired in <code>msg.payload</code>.</p>
-    <pre>{"fields": ["Name", "field1"], "filterByFormula": "{Name}='test1'"}</pre>
-    <p>For conditions that can be specified, see <b>List records</b> in the API documentation.</p>
-    <p>Outputs the records of the obtained table.</p>
-
-  <h4>find</h4>
-    <p>Get the specified record of the target table.</p>
-    <p>Inputs the record ID to be acquired in <code>msg.recId</code>.</p>
-    <p>Output the acquired records.</p>
-
-  <h4>create</h4>
-    <p>Create a new record in the target table.</p>
-    <p>Inputs the data of the record to be created in <code>msg.payload</code>. You can input a single object or an array of up to 10 objects.</p>
-    <pre>{"Name": "test1", "field1": 123, "field2": false}</pre>
-    <pre>[
-  {"fields": {"Name": "test1", "field1": 123, "field2": false}}, 
-  {"fields": {"Name": "test2", "field1": 456, "field2": false}}
-]</pre>
-    <p>Output the created record.</p>
-
-  <h4>update</h4>
-    <p>Update the record in the target table. <code>update</code> will only update the fields you specify, leaving the rest as they were.</p>
-    <p>Inputs the data of the record to be updated in <code>msg.payload</code>.</p>
-    <pre>{"field1": 987, "field2": true}</pre>
-    <p>Inputs the record ID to be updated in <code>msg.recId</code>.</p>
-    <p>Output updated record.</p>
-
-  <h4>replace</h4>
-    <p>Update the record in the target table. <code>replace</code> will only update the fields you specify and clear all unspecified field values.</p>
-    <p>Inputs the data of the record to be updated in <code>msg.payload</code>.</p>
-    <pre>{"Name": "test1", "field2": true}</pre>
-    <p>Inputs the record ID to be updated in <code>msg.recId</code>.</p>
-    <p>Output updated record.</p>
-
-  <h4>delete</h4>
-    <p>Delete the record of the target table.</p>
-    <p>Inputs the record ID to be deleted in <code>msg.recId</code>.</p>
-    <p>Output deleted records.</p>
-
-  <p><b>Tip</b>: Create input data of <code>update</code> using output of <code>select</code>.</p>
-  <pre>msg.recId = msg.payload.id;
-var recData = msg.payload.fields;
-recData["field1"] = 987;
-recData["field2"] = true;
-msg.payload = recData;
-</pre>
-
 </script>
 
 <script type="text/javascript">
