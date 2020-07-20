@@ -75,9 +75,11 @@ module.exports = function (RED) {
             base(table).select(msg.payload)
               .eachPage(function page(records, fetchNextPage) {
                 records.forEach(function(record) {
-                    node.sendMsg(null, record);
+                    //node.sendMsg(null, record);
                 });
                 fetchNextPage();
+                msg.payload = records;
+			          node.send(msg);
               }, function done(err) {
                   if (err) { 
                     node.error(err.toString(), msg);
