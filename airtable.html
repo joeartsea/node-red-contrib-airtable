@@ -66,6 +66,15 @@
       <option value="delete">delete</option>
     </select>
   </div>
+  <span class="select-Option">
+    <div class="form-row">
+    <label for="node-input-outputType"><i class="fa fa-wrench"></i> <span data-i18n="airtable_out.label.outputType"></span></label>
+    <select type="text" id="node-input-outputType">
+      <option value="multiple">1 message per record</option>
+      <option value="array">All records in 1 array</option>
+    </select>
+  </div>
+  </span>
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="airtable_out.label.name"></span></label>
     <input type="text" id="node-input-name" data-i18n="[placeholder]airtable_out.placeholder.name">
@@ -79,6 +88,7 @@
     defaults: {
       airtable: { type: 'airtable', required: true },
       operation: { value: 'create' },
+	  outputType: { value: 'multiple' },
       table: { value: '' },
       name: { value: '' }
     },
@@ -91,6 +101,15 @@
     },
     labelStyle: function () {
       return this.name ? 'node_label_italic' : '';
-    }
+    },
+	oneditprepare: function() {
+            $("#node-input-operation").change(function() {
+                if ($(this).val() == "select") {
+                    $(".select-Option").show();
+                } else {
+                    $(".select-Option").hide();
+                }
+            });
+        },
   });
 </script>
