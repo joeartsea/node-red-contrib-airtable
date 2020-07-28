@@ -13,6 +13,7 @@
         "label" : {
             "table" : "Table Name",
             "operation" : "Operation",
+			"outputType" : "OutputType",
             "name" : "Name"
         },
         "placeholder" : {

@@ -36,6 +36,7 @@ module.exports = function (RED) {
     this.airtable = n.airtable;
     this.table = n.table;
     this.operation = n.operation;
+	this.outputType = n.outputType;
     this.airtableConfig = RED.nodes.getNode(this.airtable);
     if (this.airtableConfig) {
       var node = this;
@@ -68,23 +69,40 @@ module.exports = function (RED) {
         var base = new Airtable({apiKey: credentials.apiKey}).base(credentials.baseId);
         var table = msg.table || node.table;
         var operation = msg.operation || node.operation;
+		var outputType = msg.outputType || node.outputType;
         switch (operation) {
           case 'select':
             let records = [];
             msg.payload = node.convType(msg.payload, 'object');
             base(table).select(msg.payload)
-              .eachPage(function page(records, fetchNextPage) {
+               .eachPage(function page(records, fetchNextPage) {
                 records.forEach(function(record) {
-                    node.sendMsg(null, record);
+                    //node.sendMsg(null, record);
                 });
                 fetchNextPage();
+				switch (outputType) {
+					case 'multiple':
+					for (var i = 0; i < records.length; i++){
+						msg = {'payload':{'id':records[i].id, 'fields': records[i].fields}};
+						node.send(msg);
+					}
+					break;
+					case 'array':
+					msg = {"payload": records}
+					for (var i = 0; i < records.length; i++){
+						msg.payload[i] = {'id':records[i].id, 'fields': records[i].fields};
+					}
+					node.send(msg);
+					break;
+				}
+			          
               }, function done(err) {
                   if (err) { 
                     node.error(err.toString(), msg);
                     console.error(err); 
                     return; 
                   }
-              });;
+              });
             break;
           case 'find':
             msg.payload = node.convType(msg.recId, 'string');
