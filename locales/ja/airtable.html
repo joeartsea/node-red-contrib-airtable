@@ -39,7 +39,11 @@
     <p>取得する一覧のフィルターや並び替え等の条件を<code>msg.payload</code>に入力します。</p>
     <pre>{"fields": ["Name", "field1"], "filterByFormula": "{Name}='test1'"}</pre>
     <p>指定可能な条件は、API documentationの<b>List records</b>を参照してください。</p>
-    <p>取得したテーブルのレコードを出力します。</p>
+    <p>取得したテーブルのレコードを<code>出力タイプ</code>で選択した形式で出力します。</p>
+    <ul>
+      <li><b>1件ずつ出力</b>：取得したレコードを1レコードごとにわけて次のノードに渡します。</li>
+      <li><b>配列にまとめて出力</b>：取得したレコードを1つの配列にまとめて次のノードに渡します。</li>
+    </ul>
 
   <h4>find</h4>
     <p>対象テーブルの指定したレコードを取得します。</p>
@@ -51,7 +55,7 @@
     <p><code>msg.payload</code>に作成するレコードのデータを入力します。単一オブジェクトまたは、最大10件のオブジェクト配列の入力が可能です。</p>
     <pre>{"Name": "test1", "field1": 123, "field2": false}</pre>
     <pre>[
-  {"fields": {"Name": "test1", "field1": 123, "field2": false}}, 
+  {"fields": {"Name": "test1", "field1": 123, "field2": false}},
   {"fields": {"Name": "test2", "field1": 456, "field2": false}}
 ]</pre>
     <p>作成したレコードを出力します。</p>
