@@ -18,6 +18,10 @@
         },
         "placeholder" : {
             "name" : "Name"
+        },
+        "outputType": {
+            "multiple": "1 message per record",
+            "array": "All records in 1 array"
         }
     }
 }

@@ -13,10 +13,15 @@
         "label" : {
             "table" : "テーブル名",
             "operation" : "Operation",
+            "outputType" : "出力タイプ",
             "name" : "名前"
         },
         "placeholder" : {
             "name" : "名前"
+        },
+        "outputType": {
+            "multiple": "1件ずつ出力",
+            "array": "配列にまとめて出力"
         }
     }
 }

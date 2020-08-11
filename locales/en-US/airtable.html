@@ -39,7 +39,11 @@
     <p>Inputs the filter and sort conditions of the list to be acquired in <code>msg.payload</code>.</p>
     <pre>{"fields": ["Name", "field1"], "filterByFormula": "{Name}='test1'"}</pre>
     <p>For conditions that can be specified, see <b>List records</b> in the API documentation.</p>
-    <p>Outputs the records of the obtained table.</p>
+    <p>Outputs the records of the acquired table in the format selected in <code>outputType</code>.</p>
+    <ul>
+      <li><b>1 message per record</b>：The acquired records are divided one by one and passed to the next node.</li>
+      <li><b>All records in 1 array</b>：The acquired records into one array and passes them to the next node.</li>
+    </ul>
 
   <h4>find</h4>
     <p>Get the specified record of the target table.</p>
