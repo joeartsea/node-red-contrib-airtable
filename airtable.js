@@ -66,7 +66,7 @@ module.exports = function (RED) {
           node.sendMsg('API key Not found');
           return;
         }
-        var base = new Airtable({apiKey: credentials.apiKey}).base(this.airtableConfig.credentials.baseId);
+        var base = new Airtable({apiKey: this.airtableConfig.credentials.apiKey}).base(this.airtableConfig.credentials.baseId);
         var table = msg.table || node.table;
         var operation = msg.operation || node.operation;
 		var outputType = msg.outputType || node.outputType;
