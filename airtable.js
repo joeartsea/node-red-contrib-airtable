@@ -76,7 +76,7 @@ module.exports = function (RED) {
             msg.payload = node.convType(msg.payload, 'object');
             base(table).select(msg.payload)
                .eachPage(function page(records, fetchNextPage) {
-                allRecords.concat(records);
+                allRecords = allRecords.concat(records);
                 fetchNextPage();
               }, function done(err) {
                   if (err) {
