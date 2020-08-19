@@ -72,35 +72,32 @@ module.exports = function (RED) {
 		var outputType = msg.outputType || node.outputType;
         switch (operation) {
           case 'select':
-            let records = [];
+            let allRecords = [];
             msg.payload = node.convType(msg.payload, 'object');
             base(table).select(msg.payload)
                .eachPage(function page(records, fetchNextPage) {
-                records.forEach(function(record) {
-                    //node.sendMsg(null, record);
-                });
+                allRecords = allRecords.concat(records);
                 fetchNextPage();
-				switch (outputType) {
-					case 'multiple':
-					for (var i = 0; i < records.length; i++){
-						msg = {'payload':{'id':records[i].id, 'fields': records[i].fields}};
-						node.send(msg);
-					}
-					break;
-					case 'array':
-					msg = {"payload": records}
-					for (var i = 0; i < records.length; i++){
-						msg.payload[i] = {'id':records[i].id, 'fields': records[i].fields};
-					}
-					node.send(msg);
-					break;
-				}
-			          
               }, function done(err) {
-                  if (err) { 
+                  if (err) {
                     node.error(err.toString(), msg);
-                    console.error(err); 
-                    return; 
+                    console.error(err);
+                    return;
+                  }
+                  switch (outputType) {
+                    case 'multiple':
+                    for (var i = 0; i < allRecords.length; i++){
+                      msg = {'payload':{'id':allRecords[i].id, 'fields': allRecords[i].fields}};
+                      node.send(msg);
+                    }
+                    break;
+                    case 'array':
+                    msg = {"payload": allRecords}
+                    for (var i = 0; i < allRecords.length; i++){
+                      msg.payload[i] = {'id':allRecords[i].id, 'fields': allRecords[i].fields};
+                    }
+                    node.send(msg);
+                    break;
                   }
               });
             break;
