@@ -36,7 +36,7 @@ module.exports = function (RED) {
     this.airtable = n.airtable;
     this.table = n.table;
     this.operation = n.operation;
-	this.outputType = n.outputType;
+    this.outputType = n.outputType;
     this.airtableConfig = RED.nodes.getNode(this.airtable);
     if (this.airtableConfig) {
       var node = this;
