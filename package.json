@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-airtable",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "A collection of Node-RED nodes for Airtable.",
   "dependencies": {
     "airtable": "^0.5.3"
@@ -41,6 +41,9 @@
     },
     {
       "name": "Hugobox"
+    },
+    {
+      "name": "natcl"
     }
   ]
 }
