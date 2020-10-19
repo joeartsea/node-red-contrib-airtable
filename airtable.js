@@ -36,7 +36,7 @@ module.exports = function (RED) {
     this.airtable = n.airtable;
     this.table = n.table;
     this.operation = n.operation;
-	this.outputType = n.outputType;
+    this.outputType = n.outputType;
     this.airtableConfig = RED.nodes.getNode(this.airtable);
     if (this.airtableConfig) {
       var node = this;
@@ -69,7 +69,7 @@ module.exports = function (RED) {
         var base = new Airtable({apiKey: this.airtableConfig.credentials.apiKey}).base(this.airtableConfig.credentials.baseId);
         var table = msg.table || node.table;
         var operation = msg.operation || node.operation;
-		var outputType = msg.outputType || node.outputType;
+        var outputType = msg.outputType || node.outputType;
         switch (operation) {
           case 'select':
             let allRecords = [];
@@ -87,12 +87,12 @@ module.exports = function (RED) {
                   switch (outputType) {
                     case 'multiple':
                     for (var i = 0; i < allRecords.length; i++){
-                      msg = {'payload':{'id':allRecords[i].id, 'fields': allRecords[i].fields}};
+		      msg.payload = {'id':allRecords[i].id, 'fields': allRecords[i].fields};
                       node.send(msg);
                     }
                     break;
                     case 'array':
-                    msg = {"payload": allRecords}
+	            msg.payload = allRecords;
                     for (var i = 0; i < allRecords.length; i++){
                       msg.payload[i] = {'id':allRecords[i].id, 'fields': allRecords[i].fields};
                     }
