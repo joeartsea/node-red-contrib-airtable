@@ -88,7 +88,7 @@ module.exports = function (RED) {
                     case 'multiple':
                     for (var i = 0; i < allRecords.length; i++){
 		      msg.payload = {'id':allRecords[i].id, 'fields': allRecords[i].fields};
-                      node.send(msg);
+                      node.send(RED.util.cloneMessage(msg));
                     }
                     break;
                     case 'array':
