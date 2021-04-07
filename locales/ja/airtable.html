@@ -62,21 +62,42 @@
 
   <h4>update</h4>
     <p>対象テーブルのレコードを更新します。<code>update</code>は、指定した項目の値のみ更新され、他の項目の値は維持されます。</p>
+    <p>レコードの更新は、最大10件まで可能です。</p>
+    <p><b>1件のレコードを更新する場合</b>：</p>
     <p><code>msg.payload</code>に更新するレコードのデータを入力します。</p>
     <pre>{"field1": 987, "field2": true}</pre>
     <p><code>msg.recId</code>に更新するレコードのIDを入力します。</p>
+    <p><b>複数件のレコードを更新する場合</b>：</p>
+    <p><code>msg.payload</code>に更新するレコードのデータ配列を入力します。</p>
+    <pre>[
+  {"id": "recordId1", "fields": {"field1": 987, "field2": true}},
+  {"id": "recordId2", "fields": {"field2": true}}
+]</pre>
     <p>更新したレコードを出力します。</p>
 
   <h4>replace</h4>
     <p>対象テーブルのレコードを更新します。<code>replace</code>は、指定した項目の値を更新し、他の項目の値はクリアされます。</p>
+    <p>レコードの更新は、最大10件まで可能です。</p>
+    <p><b>1件のレコードを更新する場合</b>：</p>
     <p><code>msg.payload</code>に更新するレコードのデータを入力します。</p>
     <pre>{"Name": "test1", "field2": true}</pre>
     <p><code>msg.recId</code>に更新するレコードのIDを入力します。</p>
+    <p><b>複数件のレコードを更新する場合</b>：</p>
+    <p><code>msg.payload</code>に更新するレコードのデータ配列を入力します。</p>
+    <pre>[
+  {"id": "recordId1", "fields": {"Name": "test1", "field2": true}},
+  {"id": "recordId2", "fields": {"Name": "test2", "field1": 456, "field2": true}}
+]</pre>
     <p>更新したレコードを出力します。</p>
 
   <h4>delete</h4>
     <p>対象テーブルのレコードを削除します。</p>
+    <p>レコードの削除は、最大10件まで可能です。</p>
+    <p><b>1件のレコードを削除する場合</b>：</p>
     <p><code>msg.recId</code>に削除するレコードのIDを入力します。</p>
+    <p><b>複数件のレコードを削除する場合</b>：</p>
+    <p><code>msg.payload</code>に削除するレコードのID配列を入力します。</p>
+    <pre>["recordId1", "recordId2"]</pre>
     <p>削除したレコードを出力します。</p>
 
   <p><b>Tip</b>: <code>select</code>の出力を使用して<code>update</code>の入力データを作成する。</p>

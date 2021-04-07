@@ -57,7 +57,15 @@ module.exports = function (RED) {
             node.error(err.toString(), msg);
             node.status({ fill: 'red', shape: 'ring', text: 'failed' });
           } else {
-            msg.payload = { 'id': result.id, 'fields': result.fields };
+            if (Array.isArray(result)) {
+              var resultRecords = [];
+              result.forEach(function (record) {
+                resultRecords.push({ 'id': record.id, 'fields': record.fields });
+              });
+              msg.payload = resultRecords;
+            } else {
+              msg.payload = { 'id': result.id, 'fields': result.fields };
+            }
             node.status({});
           }
           node.send(msg);
@@ -87,12 +95,12 @@ module.exports = function (RED) {
                   switch (outputType) {
                     case 'multiple':
                     for (var i = 0; i < allRecords.length; i++){
-		      msg.payload = {'id':allRecords[i].id, 'fields': allRecords[i].fields};
+            		      msg.payload = {'id':allRecords[i].id, 'fields': allRecords[i].fields};
                       node.send(RED.util.cloneMessage(msg));
                     }
                     break;
                     case 'array':
-	            msg.payload = allRecords;
+	                  msg.payload = allRecords;
                     for (var i = 0; i < allRecords.length; i++){
                       msg.payload[i] = {'id':allRecords[i].id, 'fields': allRecords[i].fields};
                     }
@@ -111,15 +119,27 @@ module.exports = function (RED) {
             break;
           case 'update':
             msg.payload = node.convType(msg.payload, 'object');
-            base(table).update(msg.recId, msg.payload, node.sendMsg);
+            if (Array.isArray(msg.payload)) {
+              base(table).update(msg.payload, node.sendMsg);
+            } else {
+              base(table).update(msg.recId, msg.payload, node.sendMsg);
+            }
             break;
           case 'replace':
             msg.payload = node.convType(msg.payload, 'object');
-            base(table).replace(msg.recId, msg.payload, node.sendMsg);
+            if (Array.isArray(msg.payload)) {
+              base(table).replace(msg.payload, node.sendMsg);
+            } else {
+              base(table).replace(msg.recId, msg.payload, node.sendMsg);
+            }
             break;
           case 'delete':
             msg.payload = node.convType(msg.payload, 'object');
-            base(table).destroy(msg.recId, node.sendMsg);
+            if (Array.isArray(msg.payload)) {
+              base(table).destroy(msg.payload, node.sendMsg);
+            } else {
+              base(table).destroy(msg.recId, node.sendMsg);
+            }
             break;
           default:
             node.error('unknown operation', msg);
