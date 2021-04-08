@@ -62,21 +62,42 @@
 
   <h4>update</h4>
     <p>Update the record in the target table. <code>update</code> will only update the fields you specify, leaving the rest as they were.</p>
+    <p>You can update up to 10 records.</p>
+    <p><b>To update a single record</b>：</p>
     <p>Inputs the data of the record to be updated in <code>msg.payload</code>.</p>
     <pre>{"field1": 987, "field2": true}</pre>
     <p>Inputs the record ID to be updated in <code>msg.recId</code>.</p>
+    <p><b>To update multiple records</b>：</p>
+    <p>Inputs the data array of the record to be updated in <code>msg.payload</code>.</p>
+    <pre>[
+  {"id": "recordId1", "fields": {"field1": 987, "field2": true}},
+  {"id": "recordId2", "fields": {"field2": true}}
+]</pre>
     <p>Output updated record.</p>
 
   <h4>replace</h4>
     <p>Update the record in the target table. <code>replace</code> will only update the fields you specify and clear all unspecified field values.</p>
+    <p>You can update up to 10 records.</p>
+    <p><b>To update a single record</b>：</p>
     <p>Inputs the data of the record to be updated in <code>msg.payload</code>.</p>
     <pre>{"Name": "test1", "field2": true}</pre>
     <p>Inputs the record ID to be updated in <code>msg.recId</code>.</p>
+    <p><b>To update multiple records</b>：</p>
+    <p>Inputs the data array of the record to be updated in <code>msg.payload</code>.</p>
+    <pre>[
+  {"id": "recordId1", "fields": {"Name": "test1", "field2": true}},
+  {"id": "recordId2", "fields": {"Name": "test2", "field1": 456, "field2": true}}
+]</pre>
     <p>Output updated record.</p>
 
   <h4>delete</h4>
     <p>Delete the record of the target table.</p>
+    <p>You can delete up to 10 records.</p>
+    <p><b>To delete a single record</b>：</p>
     <p>Inputs the record ID to be deleted in <code>msg.recId</code>.</p>
+    <p><b>To delete multiple records</b>：</p>
+    <p>Inputs the ID array of the record to be deleted in <code>msg.payload</code>.</p>
+    <pre>["recordId1", "recordId2"]</pre>
     <p>Output deleted records.</p>
 
   <p><b>Tip</b>: Create input data of <code>update</code> using output of <code>select</code>.</p>

@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "A collection of Node-RED nodes for Airtable.",
   "dependencies": {
-    "airtable": "^0.5.3"
+    "airtable": "^0.10.1"
   },
   "repository": {
     "type": "git",
